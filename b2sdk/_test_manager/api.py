@@ -27,7 +27,9 @@ BUCKET_NAME_PREFIX = 'b2tst'
 # Here, we're using these names as long as time as seeds to start the random number generator.
 # Name fraction is used for runners inside the same matrix, time fraction is used for runners in different runs.
 # To avoid collision when the same runners are fired in different commits at the same time we also use GITHUB_SHA
-random.seed(environ.get('RUNNER_NAME', 'local') + environ.get('GITHUB_SHA', 'local') + str(time.time_ns()))
+random.seed(
+    environ.get('RUNNER_NAME', 'local') + environ.get('GITHUB_SHA', 'local') + str(time.time_ns())
+)
 
 
 def generate_bucket_name() -> str:
@@ -44,6 +46,7 @@ class Api(BucketTrackingMixin, B2Api):
     """
     B2Api wrapper which should only be used for testing purposes!
     """
+
     def __init__(self, account_id: str, application_key: str, realm: str, *args, **kwargs):
         info = InMemoryAccountInfo()
         cache = InMemoryCache()
